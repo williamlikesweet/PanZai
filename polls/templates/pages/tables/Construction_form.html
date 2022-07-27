@@ -1,0 +1,46 @@
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">新增</h3>
+  </div>
+  <form id="Construction" method="POST">{% csrf_token %}
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label >師傅</label>
+            <select name="worker_id" class="form-control select2" style="width: 100%;">
+              {% for worker in workers %}
+              <option value={{worker.id}} {% if worker.id == worker_id %} selected="selected" {% endif %}>{{worker.name}}</option>
+              {% endfor %}          
+            </select>
+            <label >客戶</label>
+            <select name="client_id" class="form-control select2" style="width: 100%;">
+              {% for client in clients %}
+              <option value={{client.id}} {% if client.id == client_id %} selected="selected" {% endif %}>{{client.name}}</option>
+              {% endfor %}
+            </select>
+            <label class="col-sm-2 col-form-label">案場</label>
+            <input type="text" name="work_site" class="form-control">
+            <label >品項</label>
+            <input type="text" name="Construction_item" class="form-control">
+            <label >公分數</label>
+            <input type="text" name="Construction_cm" class="form-control">
+            <label >單價</label>
+            <input type="text" name="Construction_unit" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+<!--
+{{ constructions.work_site | pprint }}
+-->

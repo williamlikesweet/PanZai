@@ -31,10 +31,11 @@ class Construction(models.Model):
     Construction_item = models.CharField(max_length=200, null=True)
     Construction_cm = models.FloatField(null=True)
     Construction_unit = models.FloatField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
+        #ordering = ['name']
+
         return self.name
 
     class Meta:
@@ -42,3 +43,8 @@ class Construction(models.Model):
     
     def get_absolute_url(self):
         return reverse('construction_edit', kwargs={'pk': self.pk})
+
+
+
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # updated_at = models.DateTimeField(auto_now=True)
