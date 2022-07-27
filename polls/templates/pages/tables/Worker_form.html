@@ -1,0 +1,16 @@
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">新增</h3>
+  </div>
+  <form method="POST">{% csrf_token %}
+    <div class="card-body">
+      <div class="form-group">
+        <label for="name">名稱</label>
+        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="name">
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

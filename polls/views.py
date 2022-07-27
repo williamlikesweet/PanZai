@@ -22,9 +22,10 @@ def worker(request):
     return render(request, 'polls/worker.html',{'workers':workers})
 
 def workercreate(request):
+    context = {}
     if request.method == "POST":
         name = request.POST.get("name")
-        Worker.objects.create(name=name)
-    context = {}
-    return render(request, 'polls/workercreate.html',context=context)
+        worker_object =  Worker.objects.create(name=name) #name=name, tile=tile
+        context['object'] = worker_object
+    return render(request, 'polls/workercreate.html')
 
