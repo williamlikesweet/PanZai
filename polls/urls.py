@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from polls import views
 
 urlpatterns = [
     path('start_document', views.start_document, name='start_document'),

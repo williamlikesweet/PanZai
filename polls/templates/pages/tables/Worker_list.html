@@ -10,13 +10,15 @@
         <tr>
           <th>編號</th>
           <th>師傅</th>
+          <th>狀態</th>
         </tr>
       </thead>
-      {% for worker in workers %}
+      {% for worker_name,worker_values in workers.iterrows %}
       <tbody>
       <tr>
-        <td>{{worker.id}}</td>
-        <td>{{worker.name}}</td>
+        <td>{{worker_values.id}}</td>
+        <td>{{worker_values.name}}</td>
+        <td {% if worker_values.status == '離職' %} class="bg-gray disabled color-palette" {% endif %}>{{worker_values.status}}</td>
       </tr>
       </tbody>
       {% endfor %}

@@ -18,6 +18,8 @@
                   <th>品項</th>
                   <th>公分數</th>
                   <th>單價</th>
+                  <th>拆分</th>
+                  <th>日期</th>
                 </tr>
               </thead>
               {% for construction in constructions %}
@@ -29,6 +31,9 @@
                 <td>{{construction.Construction_item}}</td>
                 <td>{{construction.Construction_cm}}</td>
                 <td>{{construction.Construction_unit}}</td>
+                <td>{{construction.construction_split}}</td>
+                <td>{{construction.publish_at}}</td>
+
               </tr>  
               </tbody>
               {% endfor %}
