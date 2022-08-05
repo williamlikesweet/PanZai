@@ -1,25 +1,45 @@
 <a href="{% url 'clientcreate' %}" class="btn btn-secondary">新增</a><br><br>
 
-<div class="card">
-  <!-- <div class="card-header">
-    <h3 class="card-title">DataTable</h3>
-  </div> -->
-  <div class="card-body">
-    <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
-      <thead>
-        <tr>
-          <th>編號</th>
-          <th>師傅</th>
-        </tr>
-      </thead>
-      {% for client in clients %}
-      <tbody>
-      <tr>
-        <td>{{client.id}}</td>
-        <td>{{client.name}}</td>
-      </tr>
-      </tbody>
-      {% endfor %}
-    </table>
-  </div>
+<div class="col-md-4">
+    <div class="card card-secondary">
+        <div class="card-header">
+        <h3 class="card-title">Quick Example</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <input type="file" name="importData">
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+
+<div class="card">
+    <!-- <div class="card-header">
+      <h3 class="card-title">DataTable</h3>
+    </div> -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
+            <thead>
+            <tr>
+                <th>編號</th>
+                <th>師傅</th>
+            </tr>
+            </thead>
+            {% for client in clients %}
+                <tbody>
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.name }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+

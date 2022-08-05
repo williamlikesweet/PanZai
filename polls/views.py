@@ -1,12 +1,16 @@
+import tablib
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
 from polls.Enums.EnumWorker import EnumWorker
-from polls.models import Construction
+from polls.models import Construction, ConstructionItem
 from polls.models import Worker
 from polls.models import Client
 import pandas as pd
+from tablib import Dataset
+from polls.resources import ClientResource
+import datetime
 
 
 def start_document(request):
@@ -14,7 +18,7 @@ def start_document(request):
 
 
 def index(request):
-    constructions = Construction.objects.select_related('client', 'worker').all()
+    constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()
     return render(request, 'polls/index.html', {'constructions': constructions})
 
 
@@ -26,25 +30,58 @@ def indexcreate(request):
         worker_id = request.POST.get("worker_id")
         client_id = request.POST.get("client_id")
         work_site = request.POST.get("work_site")
-        Construction_item = request.POST.get("Construction_item")
-        Construction_cm = request.POST.get("Construction_cm")
-        Construction_unit = request.POST.get("Construction_unit")
-
+        construction_item = request.POST.get("construction_item")
+        construction_cm = request.POST.get("construction_cm")
+        construction_unit = request.POST.get("construction_unit")
+        construction_split = request.POST.get("construction_split")
+        publish_at = request.POST.get("publish_at")
         construction_object = Construction.objects.create(
             worker_id=worker_id,
             client_id=client_id,
             work_site=work_site,
-            Construction_item=Construction_item,
-            Construction_cm=Construction_cm,
-            Construction_unit=Construction_unit
+            construction_item=construction_item,
+            construction_cm=construction_cm,
+            construction_unit=construction_unit,
+            construction_split=construction_split,
+            publish_at=publish_at,
         )
         context['object'] = construction_object
         return HttpResponseRedirect(reverse('index'))
     return render(request, 'polls/indexcreate.html', {'workers': workers, 'clients': clients})
 
 
+def constructionItem(request):
+    constructionitems = ConstructionItem.objects.all()
+    return render(request, 'polls/constructionItem.html', {'constructionitems': constructionitems})
+
+
+def constructionItemCreate(request):
+    context = {}
+    if request.method == "POST":
+        item = request.POST.get("item")
+        Constructionitem_object = ConstructionItem.objects.create(item=item)
+        context['object'] = Constructionitem_object
+        return HttpResponseRedirect(reverse('constructionitem'))
+    return render(request, 'polls/constructionItemcreate.html')
+
+
 def client(request):
     clients = Client.objects.all()
+    if request.method == 'POST' and request.FILES['importData']:
+        client_resource = ClientResource()
+        # file_format = request.POST['file-format']
+        dataset = Dataset()
+        new_clients = request.FILES['importData']
+        if new_clients.content_type == 'text/csv':
+            imported_data = dataset.load(new_clients.read().decode('utf-8'), format='csv')
+            result = client_resource.import_data(dataset, dry_run=False)
+            return HttpResponseRedirect(reverse('client'))
+        else:
+            imported_data = dataset.load(new_clients.read())
+            result = client_resource.import_data(dataset, dry_run=False)
+            return HttpResponseRedirect(reverse('client'))
+    else:
+        pass
     return render(request, 'polls/client.html', {'clients': clients})
 
 

@@ -1,4 +1,4 @@
-<a href="{% url 'workercreate' %}" class="btn btn-secondary">新增</a><br><br>
+<a href="{% url 'constructionitem_create' %}" class="btn btn-secondary">新增</a><br><br>
 
 <div class="card">
     <!-- <div class="card-header">
@@ -9,17 +9,14 @@
             <thead>
             <tr>
                 <th>編號</th>
-                <th>師傅</th>
-                <th>狀態</th>
+                <th>項目</th>
             </tr>
             </thead>
-            {% for worker_name,worker_values in workers.iterrows %}
+            {% for constructionitem in constructionitems %}
                 <tbody>
                 <tr>
-                    <td>{{ worker_values.id }}</td>
-                    <td>{{ worker_values.name }}</td>
-                    <td {% if worker_values.status == '離職' %}
-                        class="bg-gray disabled color-palette" {% endif %}>{{ worker_values.status }}</td>
+                    <td>{{ constructionitem.id }}</td>
+                    <td>{{ constructionitem.item }}</td>
                 </tr>
                 </tbody>
             {% endfor %}

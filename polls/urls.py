@@ -7,6 +7,9 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('index/create', views.indexcreate, name='indexcreate'),
 
+    path('constructionitem', views.constructionItem, name='constructionitem'),
+    path('constructionitem/create', views.constructionItemCreate, name='constructionitem_create'),
+
     path('worker', views.worker, name='worker'),
     path('worker/create', views.workercreate, name='workercreate'),
 
