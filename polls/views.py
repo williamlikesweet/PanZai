@@ -25,6 +25,7 @@ def index(request):
 def indexcreate(request):
     workers = Worker.objects.all()
     clients = Client.objects.all()
+    constructionitems = ConstructionItem.objects.all()
     context = {}
     if request.method == "POST":
         worker_id = request.POST.get("worker_id")
@@ -47,7 +48,7 @@ def indexcreate(request):
         )
         context['object'] = construction_object
         return HttpResponseRedirect(reverse('index'))
-    return render(request, 'polls/indexcreate.html', {'workers': workers, 'clients': clients})
+    return render(request, 'polls/indexcreate.html', {'workers': workers, 'clients': clients, 'constructionitems': constructionitems})
 
 
 def constructionItem(request):
