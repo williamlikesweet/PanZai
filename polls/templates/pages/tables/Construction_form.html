@@ -22,13 +22,13 @@
             <label class="col-sm-2 col-form-label">案場</label>
             <input type="text" name="work_site" class="form-control">
             <label >品項</label>
-            <select name="client_id" class="form-control select2" style="width: 100%;">
+            <select name="constructionItem_id" class="form-control select2" style="width: 100%;">
               {% for constructionitem in constructionitems %}
               <option value={{constructionitem.id}} {% if constructionitem.id == constructionitem_id %} selected="selected" {% endif %}>{{constructionitem.item}}</option>
               {% endfor %}
             </select>
-            <label >公分數</label>
-            <input type="text" name="construction_cm" class="form-control">
+            <label >長度</label>
+            <input type="text" name="construction_length" class="form-control">
             <label >單價</label>
             <input type="text" name="construction_unit" class="form-control">
             <label >拆分</label>

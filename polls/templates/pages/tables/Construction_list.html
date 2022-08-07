@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <a href="{% url 'indexcreate' %}" class="btn btn-secondary">新增</a><br><br>
+        <a href="{% url 'construction_create' %}" class="btn btn-secondary">新增</a><br><br>
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">DataTable</h3>
@@ -16,9 +16,10 @@
                   <th>客戶名稱</th>
                   <th>案場地址</th>
                   <th>品項</th>
-                  <th>公分數</th>
+                  <th>長度</th>
                   <th>單價</th>
                   <th>拆分</th>
+                  <th>總額</th>
                   <th>日期</th>
                 </tr>
               </thead>
@@ -28,13 +29,13 @@
                 <td>{{construction.worker.name}}</td>
                 <td>{{construction.client.name}}</td>
                 <td>{{construction.work_site}}</td>
-                <td>{{construction.construction_item}}</td>
-                <td>{{construction.construction_cm}}</td>
+                <td>{{construction.constructionItem.item}}</td>
+                <td>{{construction.construction_length}}</td>
                 <td>{{construction.construction_unit}}</td>
                 <td>{{construction.construction_split}}</td>
+                <td>{{construction.construction_amount}}</td>
                 <td>{{construction.created_at|date:'Y-m-d'}}</td>
-
-              </tr>  
+              </tr>
               </tbody>
               {% endfor %}
             </table>
