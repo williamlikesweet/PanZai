@@ -18,5 +18,6 @@ urlpatterns = [
     path('client/create', ClientView.ClientCreate.as_view(), name='client_create'),
     path('client/edit/<int:pk>', ClientView.ClientUpdate.as_view(), name='client_edit'),
     path('client/delete/<int:pk>', ClientView.ClientDelete.as_view(), name='client_delete'),
+    path('client/import', ClientView.ClientImport, name='client_import'),
 
 ]
