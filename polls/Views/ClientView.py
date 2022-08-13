@@ -42,7 +42,6 @@ def ClientImport(request):
 
 class ClientList(ListView):
     model = Client
-    form_class = AddClientForm
     template_name = "polls/client.html"
 
 

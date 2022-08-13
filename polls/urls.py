@@ -5,8 +5,9 @@ from .Views import WorkerView, ClientView, ConstructionView, ConstructionItemVie
 urlpatterns = [
     path('start_document', views.start_document, name='start_document'),
 
-    path('construction', ConstructionView.construction, name='construction'),
-    path('construction/create', ConstructionView.constructionCreate, name='construction_create'),
+    path('construction', ConstructionView.ConstructionList.as_view(), name='construction'),
+    path('construction/create', ConstructionView.ConstructionCreate.as_view(), name='construction_create'),
+    path('construction/edit/<int:pk>', ConstructionView.ConstructionUpdate.as_view(), name='construction_edit'),
 
     path('constructionitem', ConstructionItemView.constructionItem, name='constructionitem'),
     path('constructionitem/create', ConstructionItemView.constructionItemCreate, name='constructionitem_create'),

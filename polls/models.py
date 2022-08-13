@@ -52,10 +52,6 @@ class Construction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        ordering = ['publish_at']
-        return
-
     class Meta:
         db_table = 'tb_construction'
 
