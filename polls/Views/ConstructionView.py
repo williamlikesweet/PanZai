@@ -107,6 +107,14 @@ class ConstructionUpdate(UpdateView):
     template_name = "polls/constrctioncreate.html"
     success_url = reverse_lazy('construction')
 
+
+class ConstructionDelete(DeleteView):
+    model = Construction
+    success_url = reverse_lazy('construction')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
 # 以前寫法
 # def construction(request):
 #     constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()

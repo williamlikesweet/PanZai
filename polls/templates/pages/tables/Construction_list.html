@@ -2,7 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <a href="{% url 'construction_create' %}" class="btn btn-secondary">新增</a><br><br>
+                <a href="{% url 'construction_create' %}" class="btn btn-secondary">新增</a>
+{#                <a href="{% url 'construction_import' %}" class="btn btn-secondary">匯入</a><br><br>#}
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title"></h3>
@@ -12,6 +14,7 @@
                         <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
                             <thead>
                             <tr>
+                                <th>序號</th>
                                 <th>師傅</th>
                                 <th>客戶名稱</th>
                                 <th>案場地址</th>
@@ -27,6 +30,7 @@
                             {% for construction in object_list %}
                                 <tbody>
                                 <tr>
+                                    <td>{{ construction.id }}</td>
                                     <td>{{ construction.worker.name }}</td>
                                     <td>{{ construction.client.name }}</td>
                                     <td>{{ construction.work_site | default:"" }}</td>
@@ -39,6 +43,9 @@
                                     <td>
                                         <span class="badge bg-cyan">
                                             <a href="{% url 'construction_edit' construction.id %}">Edit</a>
+                                        </span>
+                                        <span class="badge bg-danger">
+                                            <a href="{% url 'construction_delete' construction.id %}">Delete</a>
                                         </span>
                                     </td>
                                 </tr>
