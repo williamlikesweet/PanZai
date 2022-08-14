@@ -2,24 +2,21 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
+from tablib import Dataset
+
 from polls.models import Construction, ConstructionItem
 from polls.models import Worker
 from polls.models import Client
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 
+from polls.resources import ConstructionResource
+
 
 class AddConstructionForm(forms.ModelForm):
     class Meta:
         model = Construction
         exclude = ('worker_id', 'client_id', 'constructionItem_id')
-        # fields = [
-        #     'work_site',
-        #     'construction_length',
-        #     'construction_unit',
-        #     'construction_split',
-        #     'construction_amount',
-        #     'publish_at']
 
         widgets = {
             "worker": forms.Select(attrs={'class': 'form-control'}),
@@ -44,6 +41,27 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['construction_split'].required = False
         self.fields['construction_amount'].required = False
         self.fields['publish_at'].required = False
+        self.fields['publish_at'].input_formats = ["%Y-%m-%d %H:%M:%S"]
+
+
+def ConstructionImport(request):
+    if request.method == 'POST' and request.FILES['importData']:
+        Construction_resource = ConstructionResource()
+        # file_format = request.POST['file-format']
+        dataset = Dataset()
+        new_construction = request.FILES['importData']
+        if new_construction.content_type == 'text/csv':
+            imported_data = dataset.load(new_construction.read().decode('utf-8'), format='csv')
+            print(imported_data)
+            result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True)
+            return HttpResponseRedirect(reverse('construction'))
+        else:
+            imported_data = dataset.load(new_construction.read())
+            result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True)
+            return HttpResponseRedirect(reverse('construction'))
+    else:
+        pass
+    return render(request, 'polls/construction_import.html')
 
 
 class ConstructionCreate(CreateView):
@@ -70,10 +88,12 @@ class ConstructionCreate(CreateView):
         return kwargs
 
     # 有特別需求可覆蓋
-    # def form_valid(self, form):
-    #     print('thisQQ')
-    #     form.instance.worker = self.request.POST.worker
-    #     return super(ConstructionCreate).form_valid(form)
+    def form_valid(self, form):
+        form.instance.worker_id = self.request.POST['worker']
+        form.instance.client_id = self.request.POST['client']
+        form.instance.constructionItem_id = self.request.POST['constructionItem']
+        form.save()
+        return super(ConstructionCreate, self).form_valid(form)
 
     # def post(self, request, *args, **kwargs):
     #     form = AddConstructionForm(request.POST)
@@ -93,6 +113,7 @@ class ConstructionList(ListView):
 
     def get_queryset(self):
         constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()
+
         return constructions
 
     def get_context_data(self, **kwargs):

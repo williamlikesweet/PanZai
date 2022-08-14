@@ -1,17 +1,17 @@
 <div class="card card-primary">
-  <div class="card-header">
-    <h3 class="card-title">新增</h3>
-  </div>
-  <form method="POST">{% csrf_token %}
-    <div class="card-body">
-      <div class="form-group">
-        <label for="name">品項</label>
-         {{ form.item}}
-{#        <input type="text" name="item" class="form-control" required=required>#}
-      </div>
+    <div class="card-header">
+        <h3 class="card-title"></h3>
     </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
+    <form method="POST">{% csrf_token %}
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">品項</label>
+                {{ form.item }}
+                {#        <input type="text" name="item" class="form-control" required=required>#}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>

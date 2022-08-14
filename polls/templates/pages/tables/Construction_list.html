@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <a href="{% url 'construction_create' %}" class="btn btn-secondary">新增</a>
-{#                <a href="{% url 'construction_import' %}" class="btn btn-secondary">匯入</a><br><br>#}
+                <a href="{% url 'construction_import' %}" class="btn btn-secondary">匯入</a><br><br>
 
                 <div class="card">
                     <div class="card-header">
@@ -27,8 +27,9 @@
                                 <th>操作</th>
                             </tr>
                             </thead>
+                            {# 使用 JQuery DataTables 套件 foreach 必須在 <tbody> 裏面 #}
+                            <tbody>
                             {% for construction in object_list %}
-                                <tbody>
                                 <tr>
                                     <td>{{ construction.id }}</td>
                                     <td>{{ construction.worker.name }}</td>
@@ -49,8 +50,8 @@
                                         </span>
                                     </td>
                                 </tr>
-                                </tbody>
                             {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -59,3 +60,4 @@
         </div>
     </div>
 </section>
+

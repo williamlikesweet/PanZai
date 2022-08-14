@@ -1,5 +1,5 @@
 <a href="{% url 'client_create' %}" class="btn btn-secondary">新增</a>&nbsp;
-<a href="{% url 'client_import' %}" class="btn btn-secondary">匯入</a><br><br>
+{#<a href="{% url 'client_import' %}" class="btn btn-secondary">匯入</a><br><br>#}
 
 
 
@@ -17,8 +17,9 @@
 
             </tr>
             </thead>
-            {% for client in object_list %}
                 <tbody>
+                {% for client in object_list %}
+
                 <tr>
                     <td>{{ client.id }}</td>
                     <td>{{ client.name }}</td>
@@ -31,8 +32,8 @@
 {#                        </span>#}
                     </td>
                 </tr>
+                {% endfor %}
                 </tbody>
-            {% endfor %}
         </table>
     </div>
 </div>

@@ -9,6 +9,7 @@ urlpatterns = [
     path('construction/create', ConstructionView.ConstructionCreate.as_view(), name='construction_create'),
     path('construction/edit/<int:pk>', ConstructionView.ConstructionUpdate.as_view(), name='construction_edit'),
     path('construction/delete/<int:pk>', ConstructionView.ConstructionDelete.as_view(), name='construction_delete'),
+    path('construction/import', ConstructionView.ConstructionImport, name='construction_import'),
 
     path('constructionitem', ConstructionItemView.ConstructionItemList.as_view(), name='constructionitem'),
     path('constructionitem/create', ConstructionItemView.ConstructionItemCreate.as_view(), name='constructionitem_create'),
