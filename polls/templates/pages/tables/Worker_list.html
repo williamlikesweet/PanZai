@@ -15,8 +15,8 @@
                 <th>操作</th>
             </tr>
             </thead>
-            {% for worker in object_list %}
                 <tbody>
+                {% for worker in object_list %}
                 <tr>
                     <td>{{ worker.id }}</td>
                     <td>{{ worker.name }}</td>
@@ -31,8 +31,8 @@
                         </span>
                     </td>
                 </tr>
+                {% endfor %}
                 </tbody>
-            {% endfor %}
         </table>
     </div>
 </div>

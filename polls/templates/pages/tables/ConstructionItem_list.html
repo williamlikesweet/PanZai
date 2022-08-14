@@ -13,8 +13,9 @@
                 <th>操作</th>
             </tr>
             </thead>
+            <tbody>
             {% for constructionitem in object_list %}
-                <tbody>
+
                 <tr>
                     <td>{{ constructionitem.id }}</td>
                     <td>{{ constructionitem.item }}</td>
@@ -24,8 +25,8 @@
                         </span>
                     </td>
                 </tr>
-                </tbody>
             {% endfor %}
+            </tbody>
         </table>
     </div>
 </div>
