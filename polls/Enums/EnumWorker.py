@@ -9,3 +9,8 @@ class EnumWorker(Enum):
 
     status_on = 1
     status_off = 0
+
+    CHOICES = (
+        [1, '在職'],
+        [0, '離職']
+    )

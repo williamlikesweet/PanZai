@@ -1,17 +1,24 @@
 <div class="card card-primary">
-  <div class="card-header">
-    <h3 class="card-title">新增</h3>
-  </div>
-  <form method="POST">{% csrf_token %}
-    <div class="card-body">
-      <div class="form-group">
-        <label for="name">名稱</label>
-        <input type="text" name="name" class="form-control" required=required placeholder="name">
-        <input type="hidden" name="status" value="1">
-      </div>
+    <div class="card-header">
+        <h3 class="card-title">新增</h3>
     </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
+    <form method="POST">{% csrf_token %}
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">名稱</label>
+                {{ form.name }}
+                {#        <input type="text" name="name" class="form-control" required=required placeholder="name">#}
+                <br>
+                <div class="custom-control custom-radio">
+                    <label>狀態</label>
+                    {{ form.status}}
+    {#                <input type="hidden" name="status" value="1">#}
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>

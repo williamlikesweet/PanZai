@@ -1,5 +1,6 @@
 <a href="{% url 'worker_create' %}" class="btn btn-secondary">新增</a><br><br>
 
+
 <div class="card">
     <!-- <div class="card-header">
       <h3 class="card-title">DataTable</h3>
@@ -11,17 +12,23 @@
                 <th>編號</th>
                 <th>師傅</th>
                 <th>狀態</th>
+                <th>操作</th>
             </tr>
             </thead>
-            {% for worker_name,worker_values in workers.iterrows %}
+            {% for worker in object_list %}
                 <tbody>
                 <tr>
-                    <td>{{ worker_values.id }}</td>
-                    <td>{{ worker_values.name }}</td>
-                    <td {% if worker_values.status == 0 %}
+                    <td>{{ worker.id }}</td>
+                    <td>{{ worker.name }}</td>
+                    <td {% if worker.status == 0 %}
                         class="bg-gray disabled color-palette"
                     {% endif %}>
-                        {% if worker_values.status %} 在職 {% else %} 離職 {% endif %}
+                        {% if worker.status %} 在職 {% else %} 離職 {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge bg-cyan">
+                            <a href="{% url 'worker_edit' worker.id %}">Edit</a>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
@@ -29,3 +36,35 @@
         </table>
     </div>
 </div>
+
+
+{#worker(request) 寫法#}
+{#<div class="card">#}
+{#    <!-- <div class="card-header">#}
+{#      <h3 class="card-title">DataTable</h3>#}
+{#    </div> -->#}
+{#    <div class="card-body">#}
+{#        <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">#}
+{#            <thead>#}
+{#            <tr>#}
+{#                <th>編號</th>#}
+{#                <th>師傅</th>#}
+{#                <th>狀態</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            {% for worker_name,worker_values in workers.iterrows %}#}
+{#                <tbody>#}
+{#                <tr>#}
+{#                    <td>{{ worker_values.id }}</td>#}
+{#                    <td>{{ worker_values.name }}</td>#}
+{#                    <td {% if worker_values.status == 0 %}#}
+{#                        class="bg-gray disabled color-palette"#}
+{#                    {% endif %}>#}
+{#                        {% if worker_values.status %} 在職 {% else %} 離職 {% endif %}#}
+{#                    </td>#}
+{#                </tr>#}
+{#                </tbody>#}
+{#            {% endfor %}#}
+{#        </table>#}
+{#    </div>#}
+{#</div>#}
