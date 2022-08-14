@@ -18,8 +18,11 @@
                 <tr>
                     <td>{{ worker_values.id }}</td>
                     <td>{{ worker_values.name }}</td>
-                    <td {% if worker_values.status == '離職' %}
-                        class="bg-gray disabled color-palette" {% endif %}>{{ worker_values.status }}</td>
+                    <td {% if worker_values.status == 0 %}
+                        class="bg-gray disabled color-palette"
+                    {% endif %}>
+                        {% if worker_values.status %} 在職 {% else %} 離職 {% endif %}
+                    </td>
                 </tr>
                 </tbody>
             {% endfor %}
