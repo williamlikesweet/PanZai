@@ -19,9 +19,9 @@ class AddConstructionForm(forms.ModelForm):
         exclude = ('worker_id', 'client_id', 'constructionItem_id')
 
         widgets = {
-            "worker": forms.Select(attrs={'class': 'form-control'}),
-            "client": forms.Select(attrs={'class': 'form-control'}),
-            "constructionItem": forms.Select(attrs={'class': 'form-control'}),
+            "worker": forms.Select(attrs={'class': 'form-control select2'}),
+            "client": forms.Select(attrs={'class': 'form-control select2'}),
+            "constructionItem": forms.Select(attrs={'class': 'form-control select2'}),
             "work_site": forms.TextInput(attrs={'class': 'form-control'}),
             "construction_length": forms.TextInput(attrs={'class': 'form-control'}),
             "construction_unit": forms.TextInput(attrs={'class': 'form-control'}),
