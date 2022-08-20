@@ -18,6 +18,9 @@ urlpatterns = [
     path('worker', WorkerView.WorkerList.as_view(), name='worker'),
     path('worker/create', WorkerView.WorkerCreate.as_view(), name='worker_create'),
     path('worker/edit/<int:pk>', WorkerView.WorkerUpdate.as_view(), name='worker_edit'),
+    path('worker/<worker_id>', WorkerView.worker_datail, name="worker_detail"),
+    # path('worker/<int:pk>', WorkerView.worker_datail, name="worker_detail"),
+    # path('worker/<slug:isbn>', WorkerView.WorkerDetailView.as_view(), name="worker_detail"),
 
     path('client', ClientView.ClientList.as_view(), name='client'),
     path('client/create', ClientView.ClientCreate.as_view(), name='client_create'),
