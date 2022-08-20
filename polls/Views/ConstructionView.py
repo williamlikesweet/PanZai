@@ -41,7 +41,7 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['construction_split'].required = False
         self.fields['construction_amount'].required = False
         self.fields['publish_at'].required = False
-        self.fields['publish_at'].input_formats = ["%Y-%m-%d %H:%M:%S"]
+        self.fields['publish_at'].input_formats = ["%Y-%m-%d"]
 
 
 def ConstructionImport(request):
@@ -52,7 +52,6 @@ def ConstructionImport(request):
         new_construction = request.FILES['importData']
         if new_construction.content_type == 'text/csv':
             imported_data = dataset.load(new_construction.read().decode('utf-8'), format='csv')
-            print(imported_data)
             result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True)
             return HttpResponseRedirect(reverse('construction'))
         else:
