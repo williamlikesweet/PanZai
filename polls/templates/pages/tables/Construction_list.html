@@ -23,8 +23,10 @@
                                 <th>單價</th>
                                 <th>拆分</th>
                                 <th>總額</th>
-                                <th>日期</th>
+                                <th>安裝日期</th>
                                 <th>操作</th>
+                                <th>keyIn日期</th>
+
                             </tr>
                             </thead>
                             {# 使用 JQuery DataTables 套件 foreach 必須在 <tbody> 裏面 #}
@@ -49,6 +51,8 @@
                                             <a href="{% url 'construction_delete' construction.id %}">Delete</a>
                                         </span>
                                     </td>
+                                    <td>{{ construction.created_at|date:'Y-m-d' }}</td>
+
                                 </tr>
                             {% endfor %}
                             </tbody>
