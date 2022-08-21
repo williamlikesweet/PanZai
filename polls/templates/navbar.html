@@ -25,8 +25,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
-                    class="fas fa-th-large"></i></a>
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i class="fas fa-th-large"></i></a>
         </li>
     </ul>
 </nav>
@@ -37,9 +36,9 @@
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
-        <h5>師傅</h5><br>
+        <h5></h5><br>
         {% for worker in workers %}
-            <a href="#" class="nav-link">
+            <a href="{% url 'worker_detail' worker.id %}" class="nav-link">
                 <p>{{ worker.name }}</p>
             </a>
         {% endfor %}

@@ -1,5 +1,4 @@
 {% load static %}
-{% load load_nav_obj %}
 
 <!DOCTYPE html>
 <!--
@@ -22,14 +21,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper">
 
     <!-- Navbar -->
-{#    {% include 'navbar.html' %}#}
-    {% sidebar_worker %}
-
+    {% include 'navbar.html' %}
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     {% include 'sidebar.html' %}
-
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -50,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        {% include 'pages/tables/Worker_list.html' %}
+                        {% include 'pages/tables/ConstructionItem/ConstructionItem_form.html' %}
 
                     </div>
                 </div>
@@ -71,22 +67,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 {% include 'required_scripts.html' %}
 
-
-<!--"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"] -->
-<script>
-    $(function () {
-        $("#example1").DataTable({
-            "info": false,
-            "searching": false,
-            "ordering": false,
-            "responsive": false,
-            "lengthChange": false,
-            "autoWidth": true,
-            "paging": true,
-
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-</script>
 
 </body>
 </html>

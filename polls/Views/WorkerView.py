@@ -37,20 +37,20 @@ class AddWorkerForm(forms.ModelForm):
 
 class WorkerList(ListView):
     model = Worker
-    template_name = "polls/worker.html"
+    template_name = "polls/Worker/worker.html"
 
 
 class WorkerCreate(CreateView):
     model = Worker
     form_class = AddWorkerForm
-    template_name = "polls/workercreate.html"
+    template_name = "polls/Worker/workercreate.html"
     success_url = reverse_lazy('worker')
 
 
 class WorkerUpdate(UpdateView):
     model = Worker
     form_class = AddWorkerForm
-    template_name = "polls/workercreate.html"
+    template_name = "polls/Worker/workercreate.html"
     success_url = reverse_lazy('worker')
 
 
@@ -62,12 +62,13 @@ def worker_datail(request, worker_id):
     constructions = constructions.groupby(
         ['publish_at', 'worker_id', 'client_id', 'work_site', 'constructionItem_id']).sum().reset_index()
     resultData = pd.merge(constructions, workers, left_on="worker_id", right_on="id", how='left')
+    worker_name = resultData
     resultData = pd.merge(resultData, client, left_on="client_id", right_on="id", how='left')
     resultData = pd.merge(resultData, constructionItem, left_on="constructionItem_id", right_on="id", how='left')
 
     resultData = resultData.apply(lambda x: x.replace(r'\.0', "", regex=True))
     resultData = resultData.pivot_table(
-        index=['publish_at', 'name_y', 'work_site', 'construction_length', 'construction_unit', 'construction_split',
+        index=['publish_at', 'name_y', 'work_site',
                'item'],
         values=['construction_amount'],
     ).unstack().replace(np.nan, '')
@@ -77,7 +78,7 @@ def worker_datail(request, worker_id):
     DataFrame = resultData.to_html(table_id='example1',
                                    classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover')
 
-    return render(request, 'polls/worker_detail.html', {'resultData': resultData, 'DataFrame': DataFrame})
+    return render(request, 'polls/Worker/worker_detail.html', {'resultData': resultData, 'DataFrame': DataFrame, 'worker_name': worker_name})
 
 # class WorkerDetailView(DetailView):
 #     model = Construction

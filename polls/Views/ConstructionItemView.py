@@ -20,20 +20,20 @@ class AddConstructionItemForm(forms.ModelForm):
 
 class ConstructionItemList(ListView):
     model = ConstructionItem
-    template_name = "polls/constructionItem.html"
+    template_name = "polls/ConstructionItem/constructionItem.html"
 
 
 class ConstructionItemCreate(CreateView):
     model = ConstructionItem
     form_class = AddConstructionItemForm
-    template_name = "polls/constructionItemcreate.html"
+    template_name = "polls/ConstructionItem/constructionItem_create.html"
     success_url = reverse_lazy('constructionitem')
 
 
 class ConstructionItemUpdate(UpdateView):
     model = ConstructionItem
     form_class = AddConstructionItemForm
-    template_name = "polls/constructionItemcreate.html"
+    template_name = "polls/ConstructionItem/constructionItem_create.html"
     success_url = reverse_lazy('constructionitem')
 
 # def constructionItem(request):
@@ -48,4 +48,4 @@ class ConstructionItemUpdate(UpdateView):
 #         item_object = ConstructionItem.objects.create(item=item)
 #         context['object'] = item_object
 #         return HttpResponseRedirect(reverse('constructionitem'))
-#     return render(request, 'polls/constructionItemcreate.html')
+#     return render(request, 'polls/constructionItem_create.html')

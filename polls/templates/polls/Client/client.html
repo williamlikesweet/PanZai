@@ -12,10 +12,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>HongmingStone</title>
-
-    <!-- header_stylesheet -->
-    {% include 'header_stylesheet.html' %}
   
+  <!-- header_stylesheet -->
+  {% include 'header_stylesheet.html' %}
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            {% include 'pages/tables/Client_form.html' %}
+            {% include 'pages/tables/Client/Client_list.html' %}
             
           </div>
         </div>
@@ -67,6 +67,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 {% include 'required_scripts.html' %}
 
+
+<!--"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"] -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "info": false,
+      "searching": false,
+      "ordering": true,
+      "responsive": false, 
+      "lengthChange": false, 
+      "autoWidth": true,
+      "paging": true,
+      
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
 
 </body>
 </html>

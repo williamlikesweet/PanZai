@@ -37,25 +37,25 @@ def ClientImport(request):
             return HttpResponseRedirect(reverse('client'))
     else:
         pass
-    return render(request, 'polls/client_import.html')
+    return render(request, 'polls/Client/client_import.html')
 
 
 class ClientList(ListView):
     model = Client
-    template_name = "polls/client.html"
+    template_name = "polls/Client/client.html"
 
 
 class ClientCreate(CreateView):
     model = Client
     form_class = AddClientForm
-    template_name = "polls/clientcreate.html"
+    template_name = "polls/Client/client_create.html"
     success_url = reverse_lazy('client')
 
 
 class ClientUpdate(UpdateView):
     model = Client
     form_class = AddClientForm
-    template_name = "polls/clientcreate.html"
+    template_name = "polls/Client/client_create.html"
     success_url = reverse_lazy('client')
 
 
@@ -73,4 +73,4 @@ class ClientDelete(DeleteView):
 #         client_object = Client.objects.create(name=client_name)
 #         context['object'] = client_object
 #         return HttpResponseRedirect(reverse('client'))
-#     return render(request, 'polls/clientcreate.html')
+#     return render(request, 'polls/client_create.html')

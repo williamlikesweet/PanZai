@@ -60,13 +60,13 @@ def ConstructionImport(request):
             return HttpResponseRedirect(reverse('construction'))
     else:
         pass
-    return render(request, 'polls/construction_import.html')
+    return render(request, 'polls/Construction/construction_import.html')
 
 
 class ConstructionCreate(CreateView):
     model = Construction
     form_class = AddConstructionForm
-    template_name = "polls/constrctioncreate.html"
+    template_name = "polls/Construction/construction_create.html"
     success_url = reverse_lazy('construction')
 
     def get(self, request, *args, **kwargs):
@@ -77,7 +77,7 @@ class ConstructionCreate(CreateView):
                    'workers': workers,
                    'clients': clients,
                    'constructionitems': constructionitems}
-        return render(request, 'polls/constrctioncreate.html', context)
+        return render(request, 'polls/Construction/construction_create.html', context)
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(ConstructionCreate, self).get_form_kwargs(*args, **kwargs)
@@ -108,10 +108,10 @@ class ConstructionCreate(CreateView):
 
 class ConstructionList(ListView):
     model = Construction
-    template_name = "polls/construction.html"
+    template_name = "polls/Construction/construction.html"
 
     def get_queryset(self):
-        constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()
+        constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()  # 排序方法 .order_by('-id')
 
         return constructions
 
@@ -124,7 +124,7 @@ class ConstructionList(ListView):
 class ConstructionUpdate(UpdateView):
     model = Construction
     form_class = AddConstructionForm
-    template_name = "polls/constrctioncreate.html"
+    template_name = "polls/Construction/construction_create.html"
     success_url = reverse_lazy('construction')
 
 
@@ -170,5 +170,5 @@ class ConstructionDelete(DeleteView):
 #         )
 #         context['object'] = construction_object
 #         return HttpResponseRedirect(reverse('construction'))
-#     return render(request, 'polls/constrctioncreate.html',
+#     return render(request, 'polls/construction_create.html',
 #                   {'workers': workers, 'clients': clients, 'constructionitems': constructionitems})
