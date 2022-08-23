@@ -11,12 +11,14 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 
 from polls.resources import ConstructionResource
+from datetime import datetime, timedelta
 
 
 class AddConstructionForm(forms.ModelForm):
     class Meta:
         model = Construction
         exclude = ('worker_id', 'client_id', 'constructionItem_id')
+        input_formats = ['%Y-%m-%d'],
 
         widgets = {
             "worker": forms.Select(attrs={'class': 'form-control select2'}),
@@ -27,7 +29,8 @@ class AddConstructionForm(forms.ModelForm):
             "construction_unit": forms.TextInput(attrs={'class': 'form-control'}),
             "construction_split": forms.TextInput(attrs={'class': 'form-control'}),
             "construction_amount": forms.TextInput(attrs={'class': 'form-control'}),
-            "publish_at": forms.DateInput(attrs={'class': 'form-control', 'type': "date"})
+            "publish_at": forms.DateInput(attrs={'class': 'form-control', 'type': "date"}),
+            'data-target': '#datetimepicker1'
         }
 
     def __init__(self, *args, **kwargs):
@@ -111,7 +114,17 @@ class ConstructionList(ListView):
     template_name = "polls/Construction/construction.html"
 
     def get_queryset(self):
-        constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()  # 排序方法 .order_by('-id')
+        # constructions = Construction.objects.select_related('client', 'worker','constructionItem').all()  # 排序方法 .order_by('-id')
+        query = self.request.GET.get('daterangefilter')
+        if query:
+            query = query.replace(' ', '')
+            start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
+            end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
+            end = end + timedelta(days=1)
+            print(start)
+            constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').filter(created_at__range=[start, end])
+        else:
+            constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()  # 排序方法 .order_by('-id')
 
         return constructions
 
