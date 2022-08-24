@@ -74,7 +74,8 @@ def worker_datail(request, worker_id):
     ).unstack().replace(np.nan, '')
     resultData = resultData.droplevel(0, axis=1).reset_index()
     resultData = resultData.replace('0', '')
-
+    resultData['publish_at'] = resultData['publish_at'].dt.strftime('%Y-%m-%d')
+    resultData = resultData.rename(columns={'publish_at': '安裝日期', 'name_y': '客戶名稱', 'work_site': '案場地址'})
     DataFrame = resultData.to_html(table_id='example1',
                                    classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover')
 

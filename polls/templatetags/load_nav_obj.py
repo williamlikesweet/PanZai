@@ -6,6 +6,6 @@ register = template.Library()
 
 
 @register.inclusion_tag('navbar.html')
-def sidebar_worker():
+def navbar_worker():
     workers = Worker.objects.filter(status=1)
     return {'workers': workers}
