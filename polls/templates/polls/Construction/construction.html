@@ -1,4 +1,5 @@
 {% load static %}
+{% load load_nav_obj %}
 
 <!DOCTYPE html>
 <!--
@@ -20,8 +21,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Navbar -->
-    {% include 'navbar.html' %}
+{#    {% include 'navbar.html' %}#}
+            {% navbar_worker %}
+
     <!-- /.navbar -->
+
 
     <!-- Main Sidebar Container -->
     {% include 'sidebar.html' %}
