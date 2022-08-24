@@ -5,9 +5,21 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ worker_name.name.0 }}</h3>
-
                     </div>
+
                     <div class="card-body">
+                        <form class="form-inline ml-3">
+                            <div id="datetimefilter" class="input-group input-group-sm">
+                                <input class="datepickrange" name="daterangefilter" type="text">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
+
                         {% autoescape on %}
                             {{ DataFrame|safe }}
                         {% endautoescape %}

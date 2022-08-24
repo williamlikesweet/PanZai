@@ -121,7 +121,6 @@ class ConstructionList(ListView):
             start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
             end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
             end = end + timedelta(days=1)
-            print(start)
             constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').filter(created_at__range=[start, end])
         else:
             constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()  # 排序方法 .order_by('-id')

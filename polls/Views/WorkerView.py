@@ -1,7 +1,3 @@
-import json
-
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.shortcuts import render
 from django import forms
 
@@ -14,11 +10,7 @@ import numpy as np
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from django.urls import reverse_lazy
-
-CHOICES = (
-    (1, '在職'),
-    (0, '離職'),
-)
+from datetime import datetime, timedelta
 
 
 class AddWorkerForm(forms.ModelForm):
@@ -31,7 +23,7 @@ class AddWorkerForm(forms.ModelForm):
         fields = ['name', 'status']
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'}),
-            "status": forms.RadioSelect(choices=CHOICES)
+            "status": forms.RadioSelect(choices=EnumWorker.CHOICES.value)
         }
 
 
@@ -55,10 +47,19 @@ class WorkerUpdate(UpdateView):
 
 
 def worker_datail(request, worker_id):
+    query = request.GET.get('daterangefilter')
     workers = pd.DataFrame(Worker.objects.all().values())
     client = pd.DataFrame(Client.objects.all().values())
     constructionItem = pd.DataFrame(ConstructionItem.objects.all().values())
-    constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
+    if query:
+        query = query.replace(' ', '')
+        start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
+        end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
+        end = end + timedelta(days=1)
+        constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
+        constructions = constructions[(constructions['publish_at'] >= str(start)) & (constructions['publish_at'] < str(end))]
+    else:
+        constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
     constructions = constructions.groupby(
         ['publish_at', 'worker_id', 'client_id', 'work_site', 'constructionItem_id']).sum().reset_index()
     resultData = pd.merge(constructions, workers, left_on="worker_id", right_on="id", how='left')
@@ -79,7 +80,8 @@ def worker_datail(request, worker_id):
     DataFrame = resultData.to_html(table_id='example1',
                                    classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover')
 
-    return render(request, 'polls/Worker/worker_detail.html', {'resultData': resultData, 'DataFrame': DataFrame, 'worker_name': worker_name})
+    return render(request, 'polls/Worker/worker_detail.html',
+                  {'resultData': resultData, 'DataFrame': DataFrame, 'worker_name': worker_name})
 
 # class WorkerDetailView(DetailView):
 #     model = Construction
