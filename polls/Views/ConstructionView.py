@@ -42,8 +42,8 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['construction_length'].required = False
         self.fields['construction_unit'].required = False
         self.fields['construction_split'].required = False
-        self.fields['construction_amount'].required = False
-        self.fields['publish_at'].required = False
+        self.fields['construction_amount'].required = True
+        self.fields['publish_at'].required = True
         self.fields['publish_at'].input_formats = ["%Y-%m-%d"]
 
 

@@ -57,7 +57,8 @@ def worker_datail(request, worker_id):
         end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
         end = end + timedelta(days=1)
         constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
-        constructions = constructions[(constructions['publish_at'] >= str(start)) & (constructions['publish_at'] < str(end))]
+        constructions = constructions[
+            (constructions['publish_at'] >= str(start)) & (constructions['publish_at'] < str(end))]
     else:
         constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
     constructions = constructions.groupby(
@@ -68,20 +69,24 @@ def worker_datail(request, worker_id):
     resultData = pd.merge(resultData, constructionItem, left_on="constructionItem_id", right_on="id", how='left')
 
     resultData = resultData.apply(lambda x: x.replace(r'\.0', "", regex=True))
-    resultData = resultData.pivot_table(
-        index=['publish_at', 'name_y', 'work_site',
-               'item'],
-        values=['construction_amount'],
-    ).unstack().replace(np.nan, '')
-    resultData = resultData.droplevel(0, axis=1).reset_index()
-    resultData = resultData.replace('0', '')
-    resultData['publish_at'] = resultData['publish_at'].dt.strftime('%Y-%m-%d')
-    resultData = resultData.rename(columns={'publish_at': '安裝日期', 'name_y': '客戶名稱', 'work_site': '案場地址'})
-    DataFrame = resultData.to_html(table_id='example1',
-                                   classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover')
+    try:
+        resultData = resultData.pivot_table(
+            index=['publish_at', 'name_y', 'work_site',
+                   'item'],
+            values=['construction_amount'],
+        ).unstack().replace(np.nan, '')
+        resultData = resultData.droplevel(0, axis=1).reset_index()
+        resultData = resultData.replace('0', '')
+        resultData['publish_at'] = resultData['publish_at'].dt.strftime('%Y-%m-%d')
+        resultData = resultData.rename(
+            columns={'publish_at': '安裝日期', 'name_y': '客戶名稱', 'work_site': '案場地址'})
+        DataFrame = resultData.to_html(table_id='example1',
+                                       classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover')
 
-    return render(request, 'polls/Worker/worker_detail.html',
-                  {'resultData': resultData, 'DataFrame': DataFrame, 'worker_name': worker_name})
+        return render(request, 'polls/Worker/worker_detail.html',
+                      {'resultData': resultData, 'DataFrame': DataFrame, 'worker_name': worker_name})
+    except Exception as e:
+        return render(request, '404.html', {'message': str(e)})
 
 # class WorkerDetailView(DetailView):
 #     model = Construction
