@@ -1,7 +1,9 @@
 from django.db.models import Sum
 from polls.models import Construction
 from django.views.generic import ListView
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
+import calendar
 
 
 class ClientAmount(ListView):
@@ -18,8 +20,11 @@ class ClientAmount(ListView):
             query = Construction.objects.select_related('client').values('client__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[start, end])
         else:
+            this_month_start = datetime(datetime.now().year, datetime.now().month, 1)
+            this_month_end = datetime(datetime.now().year, datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1])
+            print(this_month_start)
             query = Construction.objects.select_related('client').values('client__name').annotate(
-                Sum('construction_amount'))
+                Sum('construction_amount')).filter(publish_at__range=[this_month_start, this_month_end])
         return query
 
     def get_context_data(self, **kwargs):
@@ -42,8 +47,10 @@ class WorkerAmount(ListView):
             query = Construction.objects.select_related('worker').values('worker__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[start, end])
         else:
+            this_month_start = datetime(datetime.now().year, datetime.now().month, 1)
+            this_month_end = datetime(datetime.now().year, datetime.now().month, calendar.monthrange(datetime.now().year, datetime.now().month)[1])
             query = Construction.objects.select_related('worker').values('worker__name').annotate(
-                Sum('construction_amount'))
+                Sum('construction_amount')).filter(publish_at__range=[this_month_start, this_month_end])
         return query
 
     def get_context_data(self, **kwargs):
