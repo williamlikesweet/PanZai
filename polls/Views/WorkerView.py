@@ -61,8 +61,8 @@ def worker_datail(request, worker_id):
             (constructions['publish_at'] >= str(start)) & (constructions['publish_at'] < str(end))]
     else:
         constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
-    constructions = constructions.groupby(
-        ['publish_at', 'worker_id', 'client_id', 'work_site', 'constructionItem_id']).sum().reset_index()
+        constructions = constructions.groupby(
+            ['publish_at', 'worker_id', 'client_id', 'work_site', 'constructionItem_id']).sum().reset_index()
     resultData = pd.merge(constructions, workers, left_on="worker_id", right_on="id", how='left')
     worker_name = resultData
     resultData = pd.merge(resultData, client, left_on="client_id", right_on="id", how='left')

@@ -1,6 +1,6 @@
 from django.urls import path
 from polls import views
-from .Views import WorkerView, ClientView, ConstructionView, ConstructionItemView
+from .Views import WorkerView, ClientView, ConstructionView, ConstructionItemView, TotalAmountView
 
 urlpatterns = [
     path('start_document', views.start_document, name='start_document'),
@@ -27,5 +27,8 @@ urlpatterns = [
     path('client/edit/<int:pk>', ClientView.ClientUpdate.as_view(), name='client_edit'),
     path('client/delete/<int:pk>', ClientView.ClientDelete.as_view(), name='client_delete'),
     path('client/import', ClientView.ClientImport, name='client_import'),
+
+    path('Amount/client', TotalAmountView.ClientAmount.as_view(), name='client_Amount'),
+    path('Amount/worker', TotalAmountView.WorkerAmount.as_view(), name='worker_Amount'),
 
 ]

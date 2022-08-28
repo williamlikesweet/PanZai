@@ -1,0 +1,49 @@
+<a href="{% url 'client_create' %}" class="btn btn-secondary">新增</a>&nbsp;
+{#<a href="{% url 'client_import' %}" class="btn btn-secondary">匯入</a><br><br>#}
+
+
+<div class="card">
+    <!-- <div class="card-header">
+      <h3 class="card-title">DataTable</h3>
+    </div> -->
+    {#    {{ pprint | context }}#}
+
+    <div class="card-body">
+        <div class="card-header">
+            <h3 class="card-title">師傅總表</h3>
+        </div>
+        <div class="card-body">
+            <form class="form-inline ml-3">
+                <div id="datetimefilter" class="input-group input-group-sm">
+                    <input class="datepickrange" name="daterangefilter" type="text">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+            <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
+                <thead>
+                <tr>
+                    <th>師傅</th>
+                    <th>總額</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for worker in object_list %}
+
+                    <tr>
+
+                        <td>{{ worker.worker__name }}</td>
+                        <td>{{ worker.construction_amount__sum | floatformat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
