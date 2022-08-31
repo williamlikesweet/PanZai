@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ worker_name.name.0 }}</h3>
                     </div>
-
+{#                    {{ resultData | pprint }}#}
                     <div class="card-body">
                         <form class="form-inline ml-3">
                             <div id="datetimefilter" class="input-group input-group-sm">
@@ -19,9 +19,8 @@
                             </div>
                         </form>
                         <br>
-
                         {% autoescape on %}
-                            {{ DataFrame|safe }}
+                            {{ DataFrame_html | safe }}
                         {% endautoescape %}
                     </div>
                     <!-- /.card-body -->

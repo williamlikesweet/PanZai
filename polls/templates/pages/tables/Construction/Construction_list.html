@@ -53,7 +53,7 @@
                                     <td>{{ construction.construction_length | floatformat }}</td>
                                     <td>{{ construction.construction_unit | floatformat }}</td>
                                     <td>{{ construction.construction_split | floatformat }}</td>
-                                    <td>{{ construction.construction_amount | floatformat }}</td>
+                                    <td>{{ construction.construction_amount | floatformat:"-2" }}</td>
                                     <td>{{ construction.publish_at|date:'Y-m-d' }}</td>
                                     <td>
                                         <span class="badge bg-cyan">

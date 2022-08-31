@@ -21,8 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Navbar -->
-{#    {% include 'navbar.html' %}#}
-        {% navbar_worker %}
+    {#    {% include 'navbar.html' %}#}
+    {% navbar_worker %}
 
     <!-- /.navbar -->
 
@@ -67,7 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     $(function () {
         $("#example1").DataTable({
-            lengthMenu: [[10, 30, 50, -1], [10, 30, 50,100, "All"]],
+            lengthMenu: [[1000, -1], [100, "All"]],
             info: false,
             searching: true,
             ordering: true,
@@ -75,14 +75,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
             lengthChange: true,
             autoWidth: false,
             paging: true,
-            buttons: ['excel','pdf'],
+            dom: 'Bfrtip',
+            buttons: ['excel',
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: 'Filter'
+                }
+            ],
+            columnDefs: [{
+                targets: 0,
+                visible: false
+            }],
             scrollX: true,
             scrollCollapse: true,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>
 <script>
-    $('#datetimefilter').each(function(i, el) {
+    $('#datetimefilter').each(function (i, el) {
         $(el).find('input').daterangepicker(
             {
                 ranges: {
@@ -97,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 startDate: moment(),
                 endDate: moment()
             },
-            function(start, end) {
+            function (start, end) {
                 $(el).find('input').val(start.format('Y-m-d'));
                 $(el).find('input').val(end.format('Y-m-d'));
             }
