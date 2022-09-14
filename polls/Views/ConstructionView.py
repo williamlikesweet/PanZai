@@ -12,6 +12,7 @@ from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteVi
 
 from polls.resources import ConstructionResource
 from datetime import datetime, timedelta
+from django.db.models import Count
 
 
 class AddConstructionForm(forms.ModelForm):
@@ -121,9 +122,11 @@ class ConstructionList(ListView):
             start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
             end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
             end = end + timedelta(days=1)
-            constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').filter(created_at__range=[start, end])
+            constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').filter(
+                created_at__range=[start, end])
         else:
-            constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()  # 排序方法 .order_by('-id')
+            constructions = Construction.objects.select_related('client', 'worker',
+                                                                'constructionItem').all()  # 排序方法 .order_by('-id')
 
         return constructions
 
@@ -142,10 +145,26 @@ class ConstructionUpdate(UpdateView):
 
 class ConstructionDelete(DeleteView):
     model = Construction
+    template_name = "polls/Construction/construction_confirm_delete.html"
     success_url = reverse_lazy('construction')
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+class BatchConstruction(ListView):
+    model = Construction
+    template_name = "polls/Construction/batch.html"
+
+    def get_queryset(self):
+
+        query = Construction.objects.values('created_at').annotate(dcount=Count('created_at')).order_by()
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(BatchConstruction, self).get_context_data(**kwargs)
+        # context['bar_list'] = context['foo_list'].filter(Country=64)
+        return context
 
 # 以前寫法
 # def construction(request):

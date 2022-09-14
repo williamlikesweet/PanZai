@@ -37,7 +37,7 @@
                                 <th>總額</th>
                                 <th>安裝日期</th>
                                 <th>操作</th>
-                                <th>keyIn日期</th>
+                                <th>key in 日期</th>
 
                             </tr>
                             </thead>
@@ -63,7 +63,7 @@
                                             <a href="{% url 'construction_delete' construction.id %}">Delete</a>
                                         </span>
                                     </td>
-                                    <td>{{ construction.created_at|date:'Y-m-d' }}</td>
+                                    <td>{{ construction.created_at|date:'Y-m-d H:i:s' }}</td>
 
                                 </tr>
                             {% endfor %}

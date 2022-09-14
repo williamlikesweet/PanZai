@@ -1,5 +1,9 @@
+from datetime import datetime
 from django.db import models
 from django.urls import reverse
+
+loc_dt = datetime.today()
+datetime_format = loc_dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 class Worker(models.Model):
@@ -49,7 +53,7 @@ class Construction(models.Model):
     construction_split = models.FloatField(null=True, default=None)
     construction_amount = models.FloatField(null=True, default=None)
     publish_at = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime_format)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
