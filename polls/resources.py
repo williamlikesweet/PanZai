@@ -24,6 +24,6 @@ class ConstructionResource(resources.ModelResource):
             'construction_length',
             'construction_unit',
             'construction_split',
-            'construction_amount,',
+            'construction_amount',
             'publish_at',
         )

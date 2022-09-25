@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Taipei'
-
+DATETIME_FORMAT = 'Y-m-%d H:M:S'
 USE_I18N = True
 USE_L10N = False
 USE_TZ = False

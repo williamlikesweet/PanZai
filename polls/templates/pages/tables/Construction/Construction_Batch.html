@@ -30,13 +30,12 @@
                             </thead>
                             <tbody>
                             {% for construction in object_list %}
-                                {{  construction}}
                                 <tr>
                                     <td>{{ construction.created_at | date:'Y-m-d H:i:s'}}</td>
                                     <td>
-{#                                        <span class="badge bg-danger">#}
-{#                                            <a href="{% url 'construction_delete' construction.id %}">Delete</a>#}
-{#                                        </span>#}
+                                        <span class="badge bg-danger">
+                                            <a href="{% url 'batch_delete' construction.created_at %}">Delete</a>
+                                        </span>
                                     </td>
                                 </tr>
                             {% endfor %}

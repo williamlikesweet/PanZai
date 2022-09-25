@@ -19,7 +19,6 @@ class AddConstructionForm(forms.ModelForm):
     class Meta:
         model = Construction
         exclude = ('worker_id', 'client_id', 'constructionItem_id')
-        input_formats = ['%Y-%m-%d'],
 
         widgets = {
             "worker": forms.Select(attrs={'class': 'form-control select2'}),
@@ -43,7 +42,7 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['construction_length'].required = False
         self.fields['construction_unit'].required = False
         self.fields['construction_split'].required = False
-        self.fields['construction_amount'].required = True
+        self.fields['construction_amount'].required = False
         self.fields['publish_at'].required = True
         self.fields['publish_at'].input_formats = ["%Y-%m-%d"]
 
@@ -157,7 +156,6 @@ class BatchConstruction(ListView):
     template_name = "polls/Construction/batch.html"
 
     def get_queryset(self):
-
         query = Construction.objects.values('created_at').annotate(dcount=Count('created_at')).order_by()
         return query
 
@@ -165,6 +163,23 @@ class BatchConstruction(ListView):
         context = super(BatchConstruction, self).get_context_data(**kwargs)
         # context['bar_list'] = context['foo_list'].filter(Country=64)
         return context
+
+
+def delete(request, created_at):
+    construction = Construction.objects.filter(created_at=created_at)
+    construction.delete()
+    return HttpResponseRedirect(reverse('batch'))
+
+
+# DeleteView還沒成功
+# class BatchDelete(DeleteView):
+#     model = Construction
+#     template_name = "polls/Construction/batch_confirm_delete.html"
+#     success_url = reverse_lazy('construction')
+#
+#     def get_queryset(self):
+#         return Construction.objects.filter(created_at=self.request.GET.created_at)
+
 
 # 以前寫法
 # def construction(request):

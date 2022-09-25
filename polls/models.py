@@ -2,9 +2,6 @@ from datetime import datetime
 from django.db import models
 from django.urls import reverse
 
-loc_dt = datetime.today()
-datetime_format = loc_dt.strftime("%Y-%m-%d %H:%M:%S")
-
 
 class Worker(models.Model):
     name = models.CharField(max_length=50, null=False)
@@ -44,6 +41,9 @@ class ConstructionItem(models.Model):
 
 
 class Construction(models.Model):
+    loc_dt = datetime.today()
+    datetime_format = loc_dt.strftime("%Y-%m-%d %H:%M:%S")
+
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, related_name='workers')
     constructionItem = models.ForeignKey(ConstructionItem, on_delete=models.CASCADE, related_name='constructionItems')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='clients')
@@ -53,7 +53,7 @@ class Construction(models.Model):
     construction_split = models.FloatField(null=True, default=None)
     construction_amount = models.FloatField(null=True, default=None)
     publish_at = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(default=datetime_format)
+    created_at = models.DateTimeField(null=True, default=datetime_format, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
