@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django import forms
 
-from polls.Enums.EnumWorker import EnumWorker
-from polls.models import Construction, ConstructionItem
-from polls.models import Worker
-from polls.models import Client
+from hongmingstone.Enums.EnumWorker import EnumWorker
+from hongmingstone.models import Construction, ConstructionItem
+from hongmingstone.models import Worker
+from hongmingstone.models import Client
 import pandas as pd
 import numpy as np
 from django.views.generic import ListView, DetailView
@@ -29,20 +29,20 @@ class AddWorkerForm(forms.ModelForm):
 
 class WorkerList(ListView):
     model = Worker
-    template_name = "polls/Worker/worker.html"
+    template_name = "hongmingstone/Worker/worker.html"
 
 
 class WorkerCreate(CreateView):
     model = Worker
     form_class = AddWorkerForm
-    template_name = "polls/Worker/workercreate.html"
+    template_name = "hongmingstone/Worker/workercreate.html"
     success_url = reverse_lazy('worker')
 
 
 class WorkerUpdate(UpdateView):
     model = Worker
     form_class = AddWorkerForm
-    template_name = "polls/Worker/workercreate.html"
+    template_name = "hongmingstone/Worker/workercreate.html"
     success_url = reverse_lazy('worker')
 
 
@@ -86,14 +86,14 @@ def worker_datail(request, worker_id):
                                        classes='table table-striped table-bordered table-head-fixed text-nowrap table-hover',
                                        float_format='{:10.0f}'.format
                                        )
-        return render(request, 'polls/Worker/worker_detail.html',
+        return render(request, 'hongmingstone/Worker/worker_detail.html',
                       {'resultData': resultData, 'DataFrame_html': DataFrame, 'worker_name': worker_name})
     except Exception as e:
         return render(request, '404.html', {'message': str(e)})
 
 # class WorkerDetailView(DetailView):
 #     model = Construction
-#     template_name = "polls/worker_detail.html"
+#     template_name = "hongmingstone/worker_detail.html"
 #     slug_field = 'worker'
 #     slug_url_kwarg = 'worker_id'
 #
@@ -118,7 +118,7 @@ def worker_datail(request, worker_id):
 #     # 轉換DataFrame
 #     workers = pd.DataFrame(Worker.objects.all().values())
 #     workers = workers.apply(worker_status_transfer, axis=1)
-#     return render(request, 'polls/worker.html', {'workers': workers})
+#     return render(request, 'hongmingstone/worker.html', {'workers': workers})
 #
 #
 # def workerCreate(request):
@@ -130,4 +130,4 @@ def worker_datail(request, worker_id):
 #         context['object'] = worker_object
 #         return HttpResponseRedirect(reverse('worker'))
 #
-#     return render(request, 'polls/workercreate.html')
+#     return render(request, 'hongmingstone/workercreate.html')

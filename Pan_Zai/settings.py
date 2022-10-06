@@ -39,7 +39,8 @@ INSTALLED_APPS = [
 
     # apps
     'import_export',
-    'polls.apps.PollsConfig',
+    'hongmingstone.apps.HongmingstoneConfig',
+
 ]
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
@@ -66,7 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'polls.context_processors.',
+                # 'hongmingstone.context_processors.',
             ],
         },
     },

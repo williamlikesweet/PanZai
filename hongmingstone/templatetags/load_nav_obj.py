@@ -1,4 +1,4 @@
-from polls.models import Worker
+from hongmingstone.models import Worker
 from django import template
 import pandas as pd
 

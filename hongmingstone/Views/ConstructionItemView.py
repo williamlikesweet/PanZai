@@ -2,7 +2,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from polls.models import ConstructionItem
+from hongmingstone.models import ConstructionItem
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from django.urls import reverse_lazy
@@ -20,25 +20,25 @@ class AddConstructionItemForm(forms.ModelForm):
 
 class ConstructionItemList(ListView):
     model = ConstructionItem
-    template_name = "polls/ConstructionItem/constructionItem.html"
+    template_name = "hongmingstone/ConstructionItem/constructionItem.html"
 
 
 class ConstructionItemCreate(CreateView):
     model = ConstructionItem
     form_class = AddConstructionItemForm
-    template_name = "polls/ConstructionItem/constructionItem_create.html"
+    template_name = "hongmingstone/ConstructionItem/constructionItem_create.html"
     success_url = reverse_lazy('constructionitem')
 
 
 class ConstructionItemUpdate(UpdateView):
     model = ConstructionItem
     form_class = AddConstructionItemForm
-    template_name = "polls/ConstructionItem/constructionItem_create.html"
+    template_name = "hongmingstone/ConstructionItem/constructionItem_create.html"
     success_url = reverse_lazy('constructionitem')
 
 # def constructionItem(request):
 #     constructionitems = ConstructionItem.objects.all()
-#     return render(request, 'polls/constructionItem.html', {'constructionitems': constructionitems})
+#     return render(request, 'hongmingstone/constructionItem.html', {'constructionitems': constructionitems})
 #
 #
 # def constructionItemCreate(request):
@@ -48,4 +48,4 @@ class ConstructionItemUpdate(UpdateView):
 #         item_object = ConstructionItem.objects.create(item=item)
 #         context['object'] = item_object
 #         return HttpResponseRedirect(reverse('constructionitem'))
-#     return render(request, 'polls/constructionItem_create.html')
+#     return render(request, 'hongmingstone/constructionItem_create.html')

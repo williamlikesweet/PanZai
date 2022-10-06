@@ -1,5 +1,5 @@
 from django.urls import path
-from polls import views
+from hongmingstone import views
 from .Views import WorkerView, ClientView, ConstructionView, ConstructionItemView, TotalAmountView
 
 urlpatterns = [

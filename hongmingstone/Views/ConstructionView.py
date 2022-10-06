@@ -4,13 +4,13 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from tablib import Dataset
 
-from polls.models import Construction, ConstructionItem
-from polls.models import Worker
-from polls.models import Client
+from hongmingstone.models import Construction, ConstructionItem
+from hongmingstone.models import Worker
+from hongmingstone.models import Client
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 
-from polls.resources import ConstructionResource
+from hongmingstone.resources import ConstructionResource
 from datetime import datetime, timedelta
 from django.db.models import Count
 
@@ -63,13 +63,13 @@ def ConstructionImport(request):
             return HttpResponseRedirect(reverse('construction'))
     else:
         pass
-    return render(request, 'polls/Construction/construction_import.html')
+    return render(request, 'hongmingstone/Construction/construction_import.html')
 
 
 class ConstructionCreate(CreateView):
     model = Construction
     form_class = AddConstructionForm
-    template_name = "polls/Construction/construction_create.html"
+    template_name = "hongmingstone/Construction/construction_create.html"
     success_url = reverse_lazy('construction')
 
     def get(self, request, *args, **kwargs):
@@ -80,7 +80,7 @@ class ConstructionCreate(CreateView):
                    'workers': workers,
                    'clients': clients,
                    'constructionitems': constructionitems}
-        return render(request, 'polls/Construction/construction_create.html', context)
+        return render(request, 'hongmingstone/Construction/construction_create.html', context)
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(ConstructionCreate, self).get_form_kwargs(*args, **kwargs)
@@ -106,12 +106,12 @@ class ConstructionCreate(CreateView):
     #         construction = form.save()
     #         construction.save()
     #         return HttpResponseRedirect(reverse_lazy('construction'))
-    #     return render(request, 'polls/construction.html', {'form': form})
+    #     return render(request, 'hongmingstone/construction.html', {'form': form})
 
 
 class ConstructionList(ListView):
     model = Construction
-    template_name = "polls/Construction/construction.html"
+    template_name = "hongmingstone/Construction/construction.html"
 
     def get_queryset(self):
         # constructions = Construction.objects.select_related('client', 'worker','constructionItem').all()  # 排序方法 .order_by('-id')
@@ -138,13 +138,13 @@ class ConstructionList(ListView):
 class ConstructionUpdate(UpdateView):
     model = Construction
     form_class = AddConstructionForm
-    template_name = "polls/Construction/construction_create.html"
+    template_name = "hongmingstone/Construction/construction_create.html"
     success_url = reverse_lazy('construction')
 
 
 class ConstructionDelete(DeleteView):
     model = Construction
-    template_name = "polls/Construction/construction_confirm_delete.html"
+    template_name = "hongmingstone/Construction/construction_confirm_delete.html"
     success_url = reverse_lazy('construction')
 
     def get(self, request, *args, **kwargs):
@@ -153,7 +153,7 @@ class ConstructionDelete(DeleteView):
 
 class BatchConstruction(ListView):
     model = Construction
-    template_name = "polls/Construction/batch.html"
+    template_name = "hongmingstone/Construction/batch.html"
 
     def get_queryset(self):
         query = Construction.objects.values('created_at').annotate(dcount=Count('created_at')).order_by()
@@ -174,7 +174,7 @@ def delete(request, created_at):
 # DeleteView還沒成功
 # class BatchDelete(DeleteView):
 #     model = Construction
-#     template_name = "polls/Construction/batch_confirm_delete.html"
+#     template_name = "hongmingstone/Construction/batch_confirm_delete.html"
 #     success_url = reverse_lazy('construction')
 #
 #     def get_queryset(self):
@@ -184,7 +184,7 @@ def delete(request, created_at):
 # 以前寫法
 # def construction(request):
 #     constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').all()
-#     return render(request, 'polls/construction.html', {'constructions': constructions})
+#     return render(request, 'hongmingstone/construction.html', {'constructions': constructions})
 
 # def constructionCreate(request):
 #     workers = Worker.objects.all()
@@ -216,5 +216,5 @@ def delete(request, created_at):
 #         )
 #         context['object'] = construction_object
 #         return HttpResponseRedirect(reverse('construction'))
-#     return render(request, 'polls/construction_create.html',
+#     return render(request, 'hongmingstone/construction_create.html',
 #                   {'workers': workers, 'clients': clients, 'constructionitems': constructionitems})

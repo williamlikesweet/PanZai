@@ -2,9 +2,9 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from polls.models import Client
+from hongmingstone.models import Client
 from tablib import Dataset
-from polls.resources import ClientResource
+from hongmingstone.resources import ClientResource
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from django.urls import reverse_lazy
@@ -37,25 +37,25 @@ def ClientImport(request):
             return HttpResponseRedirect(reverse('client'))
     else:
         pass
-    return render(request, 'polls/Client/client_import.html')
+    return render(request, 'hongmingstone/Client/client_import.html')
 
 
 class ClientList(ListView):
     model = Client
-    template_name = "polls/Client/client.html"
+    template_name = "hongmingstone/Client/client.html"
 
 
 class ClientCreate(CreateView):
     model = Client
     form_class = AddClientForm
-    template_name = "polls/Client/client_create.html"
+    template_name = "hongmingstone/Client/client_create.html"
     success_url = reverse_lazy('client')
 
 
 class ClientUpdate(UpdateView):
     model = Client
     form_class = AddClientForm
-    template_name = "polls/Client/client_create.html"
+    template_name = "hongmingstone/Client/client_create.html"
     success_url = reverse_lazy('client')
 
 
@@ -73,4 +73,4 @@ class ClientDelete(DeleteView):
 #         client_object = Client.objects.create(name=client_name)
 #         context['object'] = client_object
 #         return HttpResponseRedirect(reverse('client'))
-#     return render(request, 'polls/client_create.html')
+#     return render(request, 'hongmingstone/client_create.html')

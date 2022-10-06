@@ -11,8 +11,8 @@
         <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
             <thead>
             <tr>
-                <th>編號</th>
                 <th>客戶</th>
+                <th>編號</th>
                 <th>操作</th>
 
             </tr>
@@ -21,8 +21,8 @@
                 {% for client in object_list %}
 
                 <tr>
-                    <td>{{ client.id }}</td>
                     <td>{{ client.name }}</td>
+                    <td>{{ client.id }}</td>
                     <td>
                         <span class="badge bg-cyan">
                             <a href="{% url 'client_edit' client.id %}">Edit</a>

@@ -1,5 +1,5 @@
 from django.db.models import Sum
-from polls.models import Construction
+from hongmingstone.models import Construction
 from django.views.generic import ListView
 from datetime import datetime
 from datetime import timedelta
@@ -8,7 +8,7 @@ import calendar
 
 class ClientAmount(ListView):
     model = Construction
-    template_name = "polls/Client/client_amount.html"
+    template_name = "hongmingstone/Client/client_amount.html"
 
     def get_queryset(self):
         daterangefilter = self.request.GET.get('daterangefilter', '')
@@ -35,7 +35,7 @@ class ClientAmount(ListView):
 
 class WorkerAmount(ListView):
     model = Construction
-    template_name = "polls/Worker/worker_amount.html"
+    template_name = "hongmingstone/Worker/worker_amount.html"
 
     def get_queryset(self):
         daterangefilter = self.request.GET.get('daterangefilter', '')

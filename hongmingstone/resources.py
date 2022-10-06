@@ -1,7 +1,7 @@
 from import_export import resources
 from import_export.widgets import DateWidget
 
-from polls.models import Client, Construction
+from hongmingstone.models import Client, Construction
 from import_export.fields import Field
 
 
