@@ -8,8 +8,8 @@
         <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
             <thead>
             <tr>
-                <th>編號</th>
                 <th>項目</th>
+                <th>編號</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -17,8 +17,8 @@
             {% for constructionitem in object_list %}
 
                 <tr>
-                    <td>{{ constructionitem.id }}</td>
                     <td>{{ constructionitem.item }}</td>
+                    <td>{{ constructionitem.id }}</td>
                     <td>
                         <span class="badge bg-cyan">
                             <a href="{% url 'constructionitem_edit' constructionitem.id %}">Edit</a>

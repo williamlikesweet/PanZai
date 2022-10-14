@@ -9,8 +9,8 @@
         <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hover">
             <thead>
             <tr>
-                <th>編號</th>
                 <th>師傅</th>
+                <th>編號</th>
                 <th>狀態</th>
                 <th>操作</th>
             </tr>
@@ -18,8 +18,8 @@
                 <tbody>
                 {% for worker in object_list %}
                 <tr>
-                    <td>{{ worker.id }}</td>
                     <td>{{ worker.name }}</td>
+                    <td>{{ worker.id }}</td>
                     <td {% if worker.status == 0 %}
                         class="bg-gray disabled color-palette"
                     {% endif %}>
