@@ -11,11 +11,11 @@ class ClientAmount(ListView):
     template_name = "hongmingstone/Client/client_amount.html"
 
     def get_queryset(self):
-        daterangefilter = self.request.GET.get('daterangefilter', '')
-        if daterangefilter:
-            daterangefilter = daterangefilter.replace(' ', '')
-            start = datetime.strptime(daterangefilter.split('-', 1)[0], "%m/%d/%Y").date()
-            end = datetime.strptime(daterangefilter.split('-', 1)[1], "%m/%d/%Y").date()
+        query = self.request.GET.get('daterangefilter', '')
+        if query:
+            query = query.replace(' ', '')
+            start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
+            end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
             end = end + timedelta(days=1)
             query = Construction.objects.select_related('client').values('client__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[start, end])
@@ -38,11 +38,11 @@ class WorkerAmount(ListView):
     template_name = "hongmingstone/Worker/worker_amount.html"
 
     def get_queryset(self):
-        daterangefilter = self.request.GET.get('daterangefilter', '')
-        if daterangefilter:
-            daterangefilter = daterangefilter.replace(' ', '')
-            start = datetime.strptime(daterangefilter.split('-', 1)[0], "%m/%d/%Y").date()
-            end = datetime.strptime(daterangefilter.split('-', 1)[1], "%m/%d/%Y").date()
+        query = self.request.GET.get('daterangefilter', '')
+        if query:
+            query = query.replace(' ', '')
+            start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
+            end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
             end = end + timedelta(days=1)
             query = Construction.objects.select_related('worker').values('worker__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[start, end])
