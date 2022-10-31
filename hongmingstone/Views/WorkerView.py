@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django import forms
-
 from hongmingstone.Enums.EnumWorker import EnumWorker
+from hongmingstone.Service.DaterangeFilterService import daterangeFilter
 from hongmingstone.models import Construction, ConstructionItem
 from hongmingstone.models import Worker
 from hongmingstone.models import Client
@@ -10,7 +10,6 @@ import numpy as np
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from django.urls import reverse_lazy
-from datetime import datetime, timedelta
 
 
 class AddWorkerForm(forms.ModelForm):
@@ -52,13 +51,11 @@ def worker_datail(request, worker_id):
     client = pd.DataFrame(Client.objects.all().values('id', 'name'))
     constructionItem = pd.DataFrame(ConstructionItem.objects.all().values('id', 'item'))
     if query:
-        query = query.replace(' ', '')
-        start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
-        end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
-        end = end + timedelta(days=1)
+        dateRange = daterangeFilter(query)
         constructions = pd.DataFrame(Construction.objects.filter(worker_id=worker_id).values())
         constructions = constructions[
-            (constructions['publish_at'] >= str(start)) & (constructions['publish_at'] < str(end))]
+            (constructions['publish_at'] >= str(dateRange.start())) & (
+                    constructions['publish_at'] < str(dateRange.end()))]
         constructions = constructions.groupby(
             ['publish_at', 'worker_id', 'client_id', 'work_site', 'constructionItem_id']).sum().reset_index()
     else:

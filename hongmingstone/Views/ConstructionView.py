@@ -3,15 +3,13 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from tablib import Dataset
-
+from hongmingstone.Service.DaterangeFilterService import daterangeFilter
 from hongmingstone.models import Construction, ConstructionItem
 from hongmingstone.models import Worker
 from hongmingstone.models import Client
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
-
 from hongmingstone.resources import ConstructionResource
-from datetime import datetime, timedelta
 from django.db.models import Count
 
 
@@ -117,12 +115,9 @@ class ConstructionList(ListView):
         # constructions = Construction.objects.select_related('client', 'worker','constructionItem').all()  # 排序方法 .order_by('-id')
         query = self.request.GET.get('daterangefilter')
         if query:
-            query = query.replace(' ', '')
-            start = datetime.strptime(query.split('-', 1)[0], "%m/%d/%Y").date()
-            end = datetime.strptime(query.split('-', 1)[1], "%m/%d/%Y").date()
-            end = end + timedelta(days=1)
+            dateRange = daterangeFilter(query)
             constructions = Construction.objects.select_related('client', 'worker', 'constructionItem').filter(
-                created_at__range=[start, end])
+                created_at__range=[dateRange.start(), dateRange.end()])
         else:
             constructions = Construction.objects.select_related('client', 'worker',
                                                                 'constructionItem').all()  # 排序方法 .order_by('-id')
@@ -169,7 +164,6 @@ def delete(request, created_at):
     construction = Construction.objects.filter(created_at=created_at)
     construction.delete()
     return HttpResponseRedirect(reverse('batch'))
-
 
 # DeleteView還沒成功
 # class BatchDelete(DeleteView):
