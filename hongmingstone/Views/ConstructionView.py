@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from tablib import Dataset
-from hongmingstone.Service.DaterangeFilterService import daterangeFilter
+from hongmingstone.service.DaterangeFilterService import daterangeFilter
 from hongmingstone.models import Construction, ConstructionItem
 from hongmingstone.models import Worker
 from hongmingstone.models import Client
@@ -44,6 +44,16 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['publish_at'].required = False
         self.fields['publish_at'].input_formats = ["%Y-%m-%d"]
 
+
+def batch_id_add():
+    batchID = 0
+    result = Construction.objects.all()
+    last_obj = result.values_list('batchID', flat=True).last() or 0
+    if last_obj == 0:
+        batchID = batchID + 1
+    else:
+        batchID = last_obj + 1
+    return batchID
 
 def ConstructionImport(request):
     if request.method == 'POST' and request.FILES['importData']:
