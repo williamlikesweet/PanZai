@@ -16,7 +16,7 @@ from django.db.models import Count
 class AddConstructionForm(forms.ModelForm):
     class Meta:
         model = Construction
-        exclude = ('worker_id', 'client_id', 'constructionItem_id')
+        exclude = ('worker_id', 'client_id', 'constructionItem_id', 'batchID')
 
         widgets = {
             "worker": forms.Select(attrs={'class': 'form-control select2'}),
