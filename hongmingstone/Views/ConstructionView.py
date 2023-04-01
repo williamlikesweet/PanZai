@@ -11,6 +11,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from hongmingstone.resources import ConstructionResource
 from django.db.models import Count
+from hongmingstone.repository.ConstructionRepository import batchIdAdd
 
 
 class AddConstructionForm(forms.ModelForm):
@@ -45,25 +46,18 @@ class AddConstructionForm(forms.ModelForm):
         self.fields['publish_at'].input_formats = ["%Y-%m-%d"]
 
 
-def batch_id_add():
-    batchID = 0
-    result = Construction.objects.all()
-    last_obj = result.values_list('batchID', flat=True).last() or 0
-    if last_obj == 0:
-        batchID = batchID + 1
-    else:
-        batchID = last_obj + 1
-    return batchID
-
 def ConstructionImport(request):
     if request.method == 'POST' and request.FILES['importData']:
-        Construction_resource = ConstructionResource()
         # file_format = request.POST['file-format']
         dataset = Dataset()
         new_construction = request.FILES['importData']
+        Construction_resource = ConstructionResource()
+        batchID = batchIdAdd()
+
         if new_construction.content_type == 'text/csv':
             imported_data = dataset.load(new_construction.read().decode('utf-8'), format='csv')
-            result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True)
+            result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True,
+                                                       request=batchID)
             return HttpResponseRedirect(reverse('construction'))
         else:
             imported_data = dataset.load(new_construction.read())
@@ -161,7 +155,7 @@ class BatchConstruction(ListView):
     template_name = "hongmingstone/Construction/batch.html"
 
     def get_queryset(self):
-        query = Construction.objects.values('created_at').annotate(dcount=Count('created_at')).order_by()
+        query = Construction.objects.values('batchID').annotate(dcount=Count('batchID')).order_by()
         return query
 
     def get_context_data(self, **kwargs):
@@ -170,20 +164,14 @@ class BatchConstruction(ListView):
         return context
 
 
-def delete(request, created_at):
-    construction = Construction.objects.filter(created_at=created_at)
-    construction.delete()
-    return HttpResponseRedirect(reverse('batch'))
+class BatchConstructionDelete(DeleteView):
+    model = Construction
+    template_name = "hongmingstone/Construction/batch_confirm_delete.html"
+    success_url = reverse_lazy('construction')
 
-# DeleteView還沒成功
-# class BatchDelete(DeleteView):
-#     model = Construction
-#     template_name = "hongmingstone/Construction/batch_confirm_delete.html"
-#     success_url = reverse_lazy('construction')
-#
-#     def get_queryset(self):
-#         return Construction.objects.filter(created_at=self.request.GET.created_at)
-
+    def get(self, request, *args, **kwargs):
+        Construction.objects.filter(batchID=self.kwargs['pk']).delete()
+        return redirect(self.success_url)
 
 # 以前寫法
 # def construction(request):
