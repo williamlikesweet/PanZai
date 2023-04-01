@@ -12,7 +12,7 @@ urlpatterns = [
     path('construction/import', ConstructionView.ConstructionImport, name='construction_import'),
 
     path('batch', ConstructionView.BatchConstruction.as_view(), name='batch'),
-    path('batch/delete/<created_at>', ConstructionView.delete, name='batch_delete'),
+    path('batch/delete/<int:pk>', ConstructionView.BatchConstructionDelete.as_view(), name='batch_delete'),
 
     path('constructionitem', ConstructionItemView.ConstructionItemList.as_view(), name='constructionitem'),
     path('constructionitem/create', ConstructionItemView.ConstructionItemCreate.as_view(), name='constructionitem_create'),

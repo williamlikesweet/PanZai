@@ -25,16 +25,17 @@
                         <table id="example1" class="table table-bordered table-head-fixed text-nowrap table-hoverp">
                             <thead>
                             <tr>
-                                <th>匯入日期</th>
+                                <th>批號</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for construction in object_list %}
                                 <tr>
-                                    <td>{{ construction.created_at | date:'Y-m-d H:i:s'}}</td>
+                                    <td>{{ construction.batchID}}</td>
+{#                                    <td>{{ construction.created_at | date:'Y-m-d H:i:s'}}</td>#}
                                     <td>
                                         <span class="badge bg-danger">
-                                            <a href="{% url 'batch_delete' construction.created_at %}">Delete</a>
+                                            <a href="{% url 'batch_delete' construction.batchID %}">Delete</a>
                                         </span>
                                     </td>
                                 </tr>
