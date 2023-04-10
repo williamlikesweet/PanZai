@@ -1,5 +1,5 @@
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from hongmingstone.models import Client
@@ -30,10 +30,16 @@ def ClientImport(request):
         if new_clients.content_type == 'text/csv':
             imported_data = dataset.load(new_clients.read().decode('utf-8'), format='csv')
             result = client_resource.import_data(dataset, dry_run=False)
+            if result.has_errors():
+                error_message = result.row_errors()
+                return HttpResponse(f'匯入失敗：{error_message}')
             return HttpResponseRedirect(reverse('client'))
         else:
             imported_data = dataset.load(new_clients.read())
             result = client_resource.import_data(dataset, dry_run=False)
+            if result.has_errors():
+                error_message = result.row_errors()
+                return HttpResponse(f'匯入失敗：{error_message}')
             return HttpResponseRedirect(reverse('client'))
     else:
         pass
