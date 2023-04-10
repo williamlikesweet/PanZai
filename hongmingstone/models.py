@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 class Worker(models.Model):
-    name = models.CharField(max_length=50, null=False)
+    name = models.CharField(max_length=50, null=False, unique=True)
     status = models.IntegerField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -17,7 +17,7 @@ class Worker(models.Model):
 
 
 class Client(models.Model):
-    name = models.CharField(max_length=50, null=False)
+    name = models.CharField(max_length=50, null=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
