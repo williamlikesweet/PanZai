@@ -11,8 +11,8 @@
                 <br>
                 <div class="custom-control custom-radio">
                     <label>狀態</label>
-                    {{ form.status}}
-    {#                <input type="hidden" name="status" value="1">#}
+                    {{ form.status }}
+                    {#                <input type="hidden" name="status" value="1">#}
                 </div>
 
             </div>
@@ -20,5 +20,14 @@
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </form>
 </div>

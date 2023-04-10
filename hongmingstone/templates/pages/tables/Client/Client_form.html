@@ -1,17 +1,26 @@
 <div class="card card-primary">
-  <div class="card-header">
-    <h3 class="card-title"></h3>
-  </div>
-  <form method="POST">{% csrf_token %}
-    <div class="card-body">
-      <div class="form-group">
-        <label for="name">名稱</label>
-          {{ form.name }}
-{#        <input type="text" name="name" class="form-control" required=required placeholder="name">#}
-      </div>
+    <div class="card-header">
+        <h3 class="card-title"></h3>
     </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
+    <form method="POST">{% csrf_token %}
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">名稱</label>
+                {{ form.name }}
+                {#        <input type="text" name="name" class="form-control" required=required placeholder="name">#}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </form>
 </div>
