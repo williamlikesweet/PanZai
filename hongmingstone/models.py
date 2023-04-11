@@ -29,7 +29,7 @@ class Client(models.Model):
 
 
 class ConstructionItem(models.Model):
-    item = models.CharField(max_length=200, null=False)
+    item = models.CharField(max_length=200, null=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
