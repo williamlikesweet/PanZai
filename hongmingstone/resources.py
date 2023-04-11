@@ -8,6 +8,7 @@ from hongmingstone.repository.ConstructionRepository import valueTransformKey
 class ClientResource(resources.ModelResource):
     class Meta:
         model = Client
+        import_id_fields = ('name',)
 
 
 class ConstructionResource(resources.ModelResource):
