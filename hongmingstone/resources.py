@@ -1,8 +1,8 @@
 from import_export import resources, fields
 from import_export.widgets import DateWidget
-
 from hongmingstone.models import Client, Construction
 from import_export.fields import Field
+from hongmingstone.repository.ConstructionRepository import valueTransformKey
 
 
 class ClientResource(resources.ModelResource):
@@ -31,6 +31,7 @@ class ConstructionResource(resources.ModelResource):
         )
 
     def before_import_row(self, row, **kwargs):
+        row = valueTransformKey(row)
         request = kwargs.get('request')
         if request:
             row['batchID'] = request
