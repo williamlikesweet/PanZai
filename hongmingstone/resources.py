@@ -31,8 +31,9 @@ class ConstructionResource(resources.ModelResource):
         )
 
     def before_import_row(self, row, **kwargs):
-        row = valueTransformKey(row)
         request = kwargs.get('request')
         if request:
-            row['batchID'] = request
+            row['batchID'] = request['batchID']
+            row['worker'] = request['worker_name']
+        row = valueTransformKey(row)
         return super().before_import_row(row, dry_run=False, raise_errors=True, use_transactions=True, **kwargs)

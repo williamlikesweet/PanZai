@@ -1,5 +1,6 @@
+import pandas as pd
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from tablib import Dataset
@@ -11,7 +12,8 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
 from hongmingstone.resources import ConstructionResource
 from django.db.models import Count
-from hongmingstone.repository.ConstructionRepository import batchIdAdd
+from hongmingstone.repository.ConstructionRepository import batchIdAdd, preprocess_df
+import os
 
 
 class AddConstructionForm(forms.ModelForm):
@@ -51,13 +53,19 @@ def ConstructionImport(request):
         # file_format = request.POST['file-format']
         dataset = Dataset()
         new_construction = request.FILES['importData']
+        worker_name = os.path.splitext(request.FILES['importData'].name)[0]
         Construction_resource = ConstructionResource()
         batchID = batchIdAdd()
+        df = pd.read_csv(new_construction, index_col=['客戶名稱','案場地址'])
+        row = preprocess_df(df)
+        row = row.to_csv(index=False)
+        data = {'batchID': batchID, 'worker_name': worker_name}
 
         if new_construction.content_type == 'text/csv':
-            imported_data = dataset.load(new_construction.read().decode('utf-8'), format='csv')
+            # imported_data = dataset.load(new_construction.read().decode('utf-8'), format='csv')
+            imported_data = dataset.load(row, format='csv')
             result = Construction_resource.import_data(dataset, dry_run=False, raise_errors=True, use_transactions=True,
-                                                       request=batchID)
+                                                       request=data)
             return HttpResponseRedirect(reverse('construction'))
         else:
             imported_data = dataset.load(new_construction.read())
