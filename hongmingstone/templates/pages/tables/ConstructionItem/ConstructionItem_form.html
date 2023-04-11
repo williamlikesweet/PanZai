@@ -13,5 +13,14 @@
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </form>
 </div>
