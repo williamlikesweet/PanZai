@@ -52,6 +52,7 @@ def preprocess_group(group):
 
 def preprocess_df(df):
     df = df.replace(0, np.nan, inplace=False)
+    df = df.drop(df.columns[-1], axis=1)
     group_1 = df.iloc[0:, 0:3]
     group_2 = df.iloc[0:, 3:6]
     group_3 = df.iloc[0:, 6:9]
