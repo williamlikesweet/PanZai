@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # apps
     'import_export',
     'hongmingstone.apps.HongmingstoneConfig',
+    'worker.apps.WorkerConfig',
 
 ]
 IMPORT_EXPORT_USE_TRANSACTIONS = True

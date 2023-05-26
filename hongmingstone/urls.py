@@ -18,7 +18,6 @@ urlpatterns = [
     path('constructionitem/create', ConstructionItemView.ConstructionItemCreate.as_view(), name='constructionitem_create'),
     path('constructionitem/edit/<int:pk>', ConstructionItemView.ConstructionItemUpdate.as_view(), name='constructionitem_edit'),
 
-    path('worker', WorkerView.WorkerList.as_view(), name='worker'),
     path('worker/create', WorkerView.WorkerCreate.as_view(), name='worker_create'),
     path('worker/edit/<int:pk>', WorkerView.WorkerUpdate.as_view(), name='worker_edit'),
     path('worker/<worker_id>', WorkerView.worker_datail, name="worker_detail"),

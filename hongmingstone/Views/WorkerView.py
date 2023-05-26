@@ -26,11 +26,6 @@ class AddWorkerForm(forms.ModelForm):
         }
 
 
-class WorkerList(ListView):
-    model = Worker
-    template_name = "hongmingstone/Worker/worker.html"
-
-
 class WorkerCreate(CreateView):
     model = Worker
     form_class = AddWorkerForm
