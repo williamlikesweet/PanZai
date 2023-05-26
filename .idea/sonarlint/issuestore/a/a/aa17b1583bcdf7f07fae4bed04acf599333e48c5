@@ -1,0 +1,8 @@
+
+qpython:S117R"ZRename this local variable "DataFrame" to match the regular expression ^[_a-z][a-z0-9_]*$.(˜¼µò
+}python:S1174"aRename this local variable "constructionItem" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÉâúÓşÿÿÿÿ
+qpython:S1176"ZRename this local variable "dateRange" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÇŸ¦Ë
+rpython:S117A"[Rename this local variable "resultData" to match the regular expression ^[_a-z][a-z0-9_]*$.(º ‡¶
+6python:S125G"Remove this commented out code.(É–Ç
+;python:S125["Remove this commented out code.(¿ÚèÈûÿÿÿÿ
+5python:S125i"Remove this commented out code.(­·Ö
