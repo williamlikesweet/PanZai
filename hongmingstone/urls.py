@@ -1,6 +1,6 @@
 from django.urls import path
 from hongmingstone import views
-from .Views import WorkerView, ClientView, ConstructionView, ConstructionItemView, TotalAmountView
+from .Views import ClientView, ConstructionView, ConstructionItemView, TotalAmountView
 
 urlpatterns = [
     path('start_document', views.start_document, name='start_document'),
@@ -18,11 +18,6 @@ urlpatterns = [
     path('constructionitem/create', ConstructionItemView.ConstructionItemCreate.as_view(), name='constructionitem_create'),
     path('constructionitem/edit/<int:pk>', ConstructionItemView.ConstructionItemUpdate.as_view(), name='constructionitem_edit'),
 
-    path('worker/create', WorkerView.WorkerCreate.as_view(), name='worker_create'),
-    path('worker/edit/<int:pk>', WorkerView.WorkerUpdate.as_view(), name='worker_edit'),
-    path('worker/<worker_id>', WorkerView.worker_datail, name="worker_detail"),
-    # path('worker/<int:pk>', WorkerView.worker_datail, name="worker_detail"),
-    # path('worker/<slug:isbn>', WorkerView.WorkerDetailView.as_view(), name="worker_detail"),
 
     path('client', ClientView.ClientList.as_view(), name='client'),
     path('client/create', ClientView.ClientCreate.as_view(), name='client_create'),
