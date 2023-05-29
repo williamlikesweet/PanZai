@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
-from .models import Worker, WorkerForm
+from .models import Worker
 from django.urls import reverse_lazy
 from hongmingstone.service.DaterangeFilterService import daterangeFilter
-from hongmingstone.models import Construction, ConstructionItem
-from hongmingstone.models import Worker
-from hongmingstone.models import Client
+from hongmingstone.models import Construction, ConstructionItem, Client
 import pandas as pd
 import numpy as np
+from .forms import WorkerForm
+from .serializers import WorkerSerializer
 
 
 class WorkerList(ListView):
@@ -20,6 +20,7 @@ class WorkerCreate(CreateView):
     model = Worker
     form_class = WorkerForm
     template_name = "hongmingstone/Worker/workercreate.html"
+    serializer_class = WorkerSerializer
     success_url = reverse_lazy('worker')
 
 
@@ -27,6 +28,7 @@ class WorkerUpdate(UpdateView):
     model = Worker
     form_class = WorkerForm
     template_name = "hongmingstone/Worker/workercreate.html"
+    serializer_class = WorkerSerializer
     success_url = reverse_lazy('worker')
 
 
