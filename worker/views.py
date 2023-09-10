@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView, CreateView, DeleteView
@@ -13,6 +14,7 @@ from .serializers import WorkerSerializer
 
 class WorkerList(ListView):
     model = Worker
+    serializer_class = WorkerSerializer
     template_name = "hongmingstone/Worker/worker.html"
 
 
@@ -20,7 +22,6 @@ class WorkerCreate(CreateView):
     model = Worker
     form_class = WorkerForm
     template_name = "hongmingstone/Worker/workercreate.html"
-    serializer_class = WorkerSerializer
     success_url = reverse_lazy('worker')
 
 
@@ -28,7 +29,6 @@ class WorkerUpdate(UpdateView):
     model = Worker
     form_class = WorkerForm
     template_name = "hongmingstone/Worker/workercreate.html"
-    serializer_class = WorkerSerializer
     success_url = reverse_lazy('worker')
 
 

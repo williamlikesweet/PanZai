@@ -15,13 +15,12 @@ class ClientAmount(ListView):
         query = self.request.GET.get('daterangefilter', '')
         if query:
             dateRange = daterangeFilter(query)
-            clientamount = Construction.objects.select_related('client').values('client__name').annotate(
+            clientamount = Construction.objects.select_related('clients').values('client__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[dateRange.start(), dateRange.end()])
         else:
             this_month_start = datetime(datetime.now().year, datetime.now().month, 1)
             this_month_end = datetime(datetime.now().year, datetime.now().month,
                                       calendar.monthrange(datetime.now().year, datetime.now().month)[1])
-            # print(this_month_start)
             clientamount = Construction.objects.select_related('client').values('client__name').annotate(
                 Sum('construction_amount')).filter(publish_at__range=[this_month_start, this_month_end])
         return clientamount
