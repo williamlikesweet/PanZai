@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 from .forms import WorkerForm
 from .serializers import WorkerSerializer
+from datetime import datetime
+import calendar
 
 
 class WorkerList(ListView):
@@ -74,6 +76,30 @@ def Worker_datail(request, worker_id):
                       {'resultData': resultData, 'DataFrame_html': DataFrame, 'worker_name': worker_name})
     except Exception as e:
         return render(request, '404.html', {'message': str(e)})
+
+
+class WorkerAmount(ListView):
+    model = Construction
+    template_name = "hongmingstone/Worker/worker_amount.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get('daterangefilter', '')
+        if query:
+            dateRange = daterangeFilter(query)
+            workerAmount = Construction.objects.select_related('worker').values('worker__name').annotate(
+                Sum('construction_amount')).filter(publish_at__range=[dateRange.start(), dateRange.end()])
+        else:
+            this_month_start = datetime(datetime.now().year, datetime.now().month, 1)
+            this_month_end = datetime(datetime.now().year, datetime.now().month,
+                                      calendar.monthrange(datetime.now().year, datetime.now().month)[1])
+            workerAmount = Construction.objects.select_related('worker').values('worker__name').annotate(
+                Sum('construction_amount')).filter(publish_at__range=[this_month_start, this_month_end])
+        return workerAmount
+
+    def get_context_data(self, **kwargs):
+        context = super(WorkerAmount, self).get_context_data(**kwargs)
+        # context['bar_list'] = context['foo_list'].filter(Country=64)
+        return context
 
 # class WorkerDetailView(DetailView):
 #     model = Construction

@@ -26,6 +26,4 @@ urlpatterns = [
     path('client/import', ClientView.ClientImport, name='client_import'),
 
     path('Amount/client', TotalAmountView.ClientAmount.as_view(), name='client_Amount'),
-    path('Amount/worker', TotalAmountView.WorkerAmount.as_view(), name='worker_Amount'),
-
 ]
